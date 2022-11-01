@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/mainFragment">
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.example.leafdiseaseclassificationkotlin.MainFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_mainFragment_to_diseaseFragment"
+            app:destination="@id/diseaseFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/diseaseFragment"
+        android:name="com.example.leafdiseaseclassificationkotlin.DiseaseFragment"
+        android:label="fragment_disease"
+        tools:layout="@layout/fragment_disease" >
+
+        <argument android:name="picture"
+            android:defaultValue="None"/>
+        <argument android:name="highest_prob"
+            android:defaultValue="None"/>
+        <argument android:name="classification"
+            android:defaultValue="None"/>
+
+    </fragment>
+</navigation>
