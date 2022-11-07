@@ -32,7 +32,6 @@ import java.io.IOException
 
 class MainFragment : Fragment(), View.OnClickListener {
 
-    private lateinit var contentResolver: ContentResolver
     private lateinit var navController: NavController
     private lateinit var camera: Button
     private lateinit var gallery: Button
@@ -138,7 +137,6 @@ class MainFragment : Fragment(), View.OnClickListener {
 
         } catch (e: IOException) {
             // TODO Handle the exception
-            println("caiu aqui")
         }
     }
 
@@ -153,10 +151,10 @@ class MainFragment : Fragment(), View.OnClickListener {
                 image = Bitmap.createScaledBitmap(image, imageSize, imageSize, false)
                 classifyImage(image)
             } else {
-                val dat = data!!.data
+                val dat = data?.data
                 var image: Bitmap? = null
                 try {
-                    image = getBitmap(this.contentResolver, dat)
+                    image = getBitmap(activity?.contentResolver, dat)
                 } catch (e: IOException) {
                     e.printStackTrace()
                 }
