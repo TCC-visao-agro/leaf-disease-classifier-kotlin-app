@@ -27,6 +27,7 @@ class DiseaseFragment : Fragment(){
         classification = arguments?.getString("classification")!!
         picture = arguments?.getString("picture")!!
 
+
     }
 
 
@@ -44,12 +45,13 @@ class DiseaseFragment : Fragment(){
         //decodando a string para virar bitmap e poder ser exibida
         val imageBytes = Base64.decode(picture, 0)
         val image = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
+        val test = (highest_prob.toFloat() * 100).toString() + "%"
 
         confidence = view.findViewById(R.id.confidence)
         result = view.findViewById(R.id.result)
         imageView = view.findViewById(R.id.imageView)
 
-        confidence.text = highest_prob
+        confidence.text = test
         result.text = classification
         imageView.setImageBitmap(image)
 

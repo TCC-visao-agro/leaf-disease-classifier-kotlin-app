@@ -29,6 +29,8 @@ import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
+import kotlin.math.exp
+import kotlin.math.min
 
 class MainFragment : Fragment(), View.OnClickListener {
 
@@ -70,15 +72,12 @@ class MainFragment : Fragment(), View.OnClickListener {
             startActivityForResult(cameraIntent, 1)
         }
 
-        //view.findViewById<Button>(R.id.buttonPhoto).setOnClickListener(this)
-        //view.findViewById<Button>(R.id.buttonCamera).setOnClickListener(this)
     }
 
-    fun classifyImage(image: Bitmap) {
+    private fun classifyImage(image: Bitmap) {
         try {
-            //println(assetFilePath(this, "model_v9_v5.pt"))
             val module =
-                LiteModuleLoader.load(this.assetFilePath(this.requireContext(), "model_v9.ptl"));
+                LiteModuleLoader.load(this.assetFilePath(this.requireContext(), "model_v9.ptl"))
             // Creates inputs for reference.
 
             // preparing input tensor
@@ -93,12 +92,15 @@ class MainFragment : Fragment(), View.OnClickListener {
 
             // getting tensor content as java array of floats
             val scores = outputTensor.dataAsFloatArray
+            val softmaxValues = toSoftmax(scores)
 
-            // searching for the index with maximum score
+            // searching for the index with maximum score]
+            var maxScoreSoftmax: Float? = null
             var maxScore = -Float.MAX_VALUE
             var maxScoreIdx = -1
             for (i in scores.indices) {
                 if (scores[i] > maxScore) {
+                    maxScoreSoftmax = softmaxValues[i]
                     maxScore = scores[i]
                     maxScoreIdx = i
                 }
@@ -123,21 +125,29 @@ class MainFragment : Fragment(), View.OnClickListener {
             val base64Image = encodeImage(image)
 
             //importante nunca esquecer que a tipagem aqui no bundle pode QUEBRAR O APP INTEIRO!!!
-            val bundle = bundleOf("picture" to base64Image, "highest_prob" to maxScore.toString(), "classification" to className)
+            val bundle = bundleOf("picture" to base64Image, "highest_prob" to maxScoreSoftmax.toString(), "classification" to className)
             navController.navigate(R.id.action_mainFragment_to_diseaseFragment, bundle)
-
-            //vai enviar pra outra tela
-            //result.text = className
-//            var s = ""
-//            for (i in classes.indices) {
-//                s += String.format("%s: %.1f%%\n", classes[i], scores[i] * 100)
-//            }
-            //vai enviar pra outra tela
-            //confidence.text = s
 
         } catch (e: IOException) {
             // TODO Handle the exception
         }
+    }
+
+    private fun toSoftmax(scores: FloatArray?): FloatArray {
+        var expValues = arrayOf<Float>()
+
+        for (value in scores!!) {
+            expValues += exp(value)
+        }
+
+        val sumExpValues = expValues.sum()
+        var softmaxValues = arrayOf<Float>()
+
+        for (value in expValues) {
+            softmaxValues += value/sumExpValues
+        }
+
+        return softmaxValues.toFloatArray()
     }
 
     @Deprecated("Deprecated in Java")
@@ -145,7 +155,7 @@ class MainFragment : Fragment(), View.OnClickListener {
         if (resultCode == AppCompatActivity.RESULT_OK) {
             if (requestCode == 3) {
                 var image = data!!.extras!!["data"] as Bitmap?
-                val dimension = Math.min(image!!.width, image.height)
+                val dimension = min(image!!.width, image.height)
                 image = ThumbnailUtils.extractThumbnail(image, dimension, dimension)
                 //imageView.setImageBitmap(image)
                 image = Bitmap.createScaledBitmap(image, imageSize, imageSize, false)
