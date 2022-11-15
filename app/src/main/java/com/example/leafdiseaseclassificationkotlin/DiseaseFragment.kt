@@ -9,16 +9,15 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import android.util.Log
 
 class DiseaseFragment : Fragment(){
-    var currentDiseaseName = "Healthy"
-    var currentDiseaseInformation = "loren ipsun"
+    private var currentDiseaseName = "Healthy"
+    private var currentDiseaseInformation = "loren ipsun"
     private lateinit var confidence: TextView
     private lateinit var result: TextView
     private lateinit var imageView: ImageView
     private lateinit var information: TextView
-    private lateinit var highest_prob: String
+    private lateinit var highestProb: String
     private lateinit var classification: String
     private lateinit var picture: String
 
@@ -65,7 +64,7 @@ class DiseaseFragment : Fragment(){
         super.onCreate(savedInstanceState)
 
         //argumentos passados da ultima fragment!!!
-        highest_prob = arguments?.getString("highest_prob")!!
+        highestProb = arguments?.getString("highest_prob")!!
         classification = arguments?.getString("classification")!!
         picture = arguments?.getString("picture")!!
     }
@@ -85,7 +84,7 @@ class DiseaseFragment : Fragment(){
         //decodando a string para virar bitmap e poder ser exibida
         val imageBytes = Base64.decode(picture, 0)
         val image = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
-        val test = (highest_prob.toFloat() * 100).toString() + "%"
+        val test = (highestProb.toFloat() * 100).toString() + "%"
 
         confidence = view.findViewById(R.id.confidence)
         result = view.findViewById(R.id.result)

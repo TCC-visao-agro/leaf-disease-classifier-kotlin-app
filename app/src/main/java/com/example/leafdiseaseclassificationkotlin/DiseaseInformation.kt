@@ -1,6 +1,6 @@
 package com.example.leafdiseaseclassificationkotlin
 
-class DiseaseInformation() {
+class DiseaseInformation {
     var currentDiseaseName = "Healthy"
     var currentDiseaseInformation = "loren ipsun"
 

@@ -14,6 +14,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.PermissionChecker
 import androidx.core.content.PermissionChecker.checkSelfPermission
@@ -37,6 +38,7 @@ class MainFragment : Fragment(), View.OnClickListener {
     private lateinit var navController: NavController
     private lateinit var camera: Button
     private lateinit var gallery: Button
+    private lateinit var helloName: TextView
     private var imageSize = 240
 
     override fun onCreateView(
@@ -53,6 +55,7 @@ class MainFragment : Fragment(), View.OnClickListener {
         navController = Navigation.findNavController(view)
         camera = view.findViewById(R.id.buttonCamera)
         gallery = view.findViewById(R.id.buttonPhoto)
+        helloName = view.findViewById(R.id.textViewHello)
 
         camera.setOnClickListener {
             if (checkSelfPermission(
@@ -136,16 +139,12 @@ class MainFragment : Fragment(), View.OnClickListener {
     private fun toSoftmax(scores: FloatArray?): FloatArray {
         var expValues = arrayOf<Float>()
 
-        for (value in scores!!) {
-            expValues += exp(value)
-        }
+        for (value in scores!!) expValues += exp(value)
 
         val sumExpValues = expValues.sum()
         var softmaxValues = arrayOf<Float>()
 
-        for (value in expValues) {
-            softmaxValues += value/sumExpValues
-        }
+        for (value in expValues) softmaxValues += value/sumExpValues
 
         return softmaxValues.toFloatArray()
     }
