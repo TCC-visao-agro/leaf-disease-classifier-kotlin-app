@@ -3,29 +3,73 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
+    android:padding="30sp"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/buttonCamera"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/buttonPhoto"
-        android:layout_centerVertical="true"
-        android:layout_marginBottom="-2dp"
-        android:text="Tirar Foto"
-        android:textAllCaps="false"
-        android:textSize="21sp"
-        android:textStyle="bold" />
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
 
-    <Button
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Olá"
+            android:textSize="50sp" />
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:id="@+id/buttonPhoto"
-        android:text="Foto da Galeria"
-        android:textAllCaps="false"
-        android:textSize="21sp"
-        android:textStyle="bold"
-        />
+        android:layout_marginTop="60sp"
+        android:layout_marginBottom="60sp"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/buttonPhoto"
+            android:layout_width="match_parent"
+            android:layout_height="70sp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="20sp"
+            android:backgroundTint="#4CAF50"
+            android:text="Foto da Galeria"
+            android:textAllCaps="false"
+            android:textSize="21sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/buttonCamera"
+            android:layout_width="match_parent"
+            android:layout_height="70sp"
+            android:layout_marginBottom="-2dp"
+            android:backgroundTint="#4CAF50"
+            android:text="Tirar Foto"
+            android:textAllCaps="false"
+            android:textSize="21sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="250sp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ultimas verificações"
+                android:textSize="20sp" />
+        </LinearLayout>
+    </ScrollView>
 
 </RelativeLayout>
