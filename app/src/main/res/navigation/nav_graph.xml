@@ -27,6 +27,9 @@
             android:defaultValue="None"/>
         <argument android:name="classification"
             android:defaultValue="None"/>
+        <action
+            android:id="@+id/action_diseaseFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
 
     </fragment>
     <fragment

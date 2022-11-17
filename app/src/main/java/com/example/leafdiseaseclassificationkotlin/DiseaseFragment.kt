@@ -1,18 +1,34 @@
 package com.example.leafdiseaseclassificationkotlin
 
+import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
+import android.os.Build
 import android.os.Bundle
 import android.util.Base64
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import java.io.*
+import java.time.LocalDateTime
 
-class DiseaseFragment : Fragment(){
+class DiseaseFragment : Fragment() {
     private var currentDiseaseName = "Healthy"
     private var currentDiseaseInformation = "loren ipsun"
+    var navController: NavController? = null
     private lateinit var confidence: TextView
     private lateinit var result: TextView
     private lateinit var imageView: ImageView
@@ -20,6 +36,11 @@ class DiseaseFragment : Fragment(){
     private lateinit var highestProb: String
     private lateinit var classification: String
     private lateinit var picture: String
+    lateinit var outputStream: OutputStream
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    val currentDateTime = LocalDateTime.now()
+
 
     private val diseaseList = arrayOf(
         "Tomato_Bacterial_spot",
@@ -62,7 +83,6 @@ class DiseaseFragment : Fragment(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         //argumentos passados da ultima fragment!!!
         highestProb = arguments?.getString("highest_prob")!!
         classification = arguments?.getString("classification")!!
@@ -74,12 +94,15 @@ class DiseaseFragment : Fragment(){
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_disease, container, false)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        navController = Navigation.findNavController(view)
 
         //decodando a string para virar bitmap e poder ser exibida
         val imageBytes = Base64.decode(picture, 0)
@@ -91,8 +114,8 @@ class DiseaseFragment : Fragment(){
         imageView = view.findViewById(R.id.imageView)
         information = view.findViewById(R.id.diseaseInformation)
 
-        for(i in  0..9){
-            if (classification == diseaseList[i]){
+        for (i in 0..9) {
+            if (classification == diseaseList[i]) {
                 currentDiseaseName = translatedDiseaseList[i]
                 currentDiseaseInformation = diseaseSymptomsList[i]
             }
@@ -103,5 +126,63 @@ class DiseaseFragment : Fragment(){
         information.text = currentDiseaseInformation
         imageView.setImageBitmap(image)
 
+        when (PackageManager.PERMISSION_GRANTED) {
+            ContextCompat.checkSelfPermission(
+                requireContext(),
+                WRITE_EXTERNAL_STORAGE
+            ) -> {
+                saveImage()
+            }
+            else -> {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                    permissionLauncher.launch(
+                        WRITE_EXTERNAL_STORAGE,
+                    )
+                }
+            }
+        }
     }
+
+    private val permissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted ->
+        if (isGranted) {
+            Log.d("Permission Granted:", isGranted.toString())
+        } else {
+            Log.d("Permission Granted:", isGranted.toString())
+        }
+    }
+
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun saveImage() {
+        val dir = File(context?.filesDir, "LeafClassification")
+        if (!dir.exists()) {
+            Log.d("Unavailable:", dir.absolutePath);
+            Log.d("Can write?:", dir.canWrite().toString())
+            dir.mkdirs()
+        }
+        val drawable = imageView.drawable as BitmapDrawable
+        val bitmap = drawable.bitmap
+        val file = File(dir, "$currentDateTime.jpg")
+        try {
+            outputStream = FileOutputStream(file)
+        } catch (e: FileNotFoundException) {
+            e.printStackTrace()
+        }
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+        Toast.makeText(context, "Imagem salva com sucesso.", Toast.LENGTH_SHORT).show()
+        try {
+            outputStream.flush()
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+        try {
+            outputStream.close()
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+
+    }
+
 }

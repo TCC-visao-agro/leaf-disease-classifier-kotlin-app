@@ -33,7 +33,7 @@ import java.io.IOException
 import kotlin.math.exp
 import kotlin.math.min
 
-class MainFragment : Fragment(), View.OnClickListener {
+class MainFragment : Fragment(){
 
     private lateinit var navController: NavController
     private lateinit var camera: Button
@@ -199,11 +199,6 @@ class MainFragment : Fragment(), View.OnClickListener {
             }
             return file.absolutePath
         }
-    }
-
-    override fun onClick(v: View?) {
-
-
     }
 
 }
