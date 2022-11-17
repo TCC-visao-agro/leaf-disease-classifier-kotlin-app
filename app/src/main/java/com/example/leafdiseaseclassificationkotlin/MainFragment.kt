@@ -1,7 +1,6 @@
 package com.example.leafdiseaseclassificationkotlin
 
 import android.Manifest
-import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -22,6 +21,10 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import org.pytorch.IValue
 import org.pytorch.LiteModuleLoader
 import org.pytorch.MemoryFormat
@@ -33,13 +36,16 @@ import java.io.IOException
 import kotlin.math.exp
 import kotlin.math.min
 
-class MainFragment : Fragment(){
+class MainFragment : Fragment() {
 
     private lateinit var navController: NavController
     private lateinit var camera: Button
     private lateinit var gallery: Button
     private lateinit var helloName: TextView
     private var imageSize = 240
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var adapter: ClassificationAdapter
+    private lateinit var classificationHistoryList: ArrayList<Classification>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,10 +58,20 @@ class MainFragment : Fragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        dataInitialize()
+        recyclerView = view.findViewById(R.id.recyclerView)
+        if (this::classificationHistoryList.isInitialized) {
+            val layoutManager = LinearLayoutManager(context)
+            recyclerView.layoutManager = layoutManager
+            recyclerView.setHasFixedSize(true)
+            adapter = ClassificationAdapter(classificationHistoryList)
+            recyclerView.adapter = adapter
+        }
         navController = Navigation.findNavController(view)
         camera = view.findViewById(R.id.buttonCamera)
         gallery = view.findViewById(R.id.buttonPhoto)
         helloName = view.findViewById(R.id.textViewHello)
+
 
         camera.setOnClickListener {
             if (checkSelfPermission(
@@ -128,7 +144,11 @@ class MainFragment : Fragment(){
             val base64Image = encodeImage(image)
 
             //importante nunca esquecer que a tipagem aqui no bundle pode QUEBRAR O APP INTEIRO!!!
-            val bundle = bundleOf("picture" to base64Image, "highest_prob" to maxScoreSoftmax.toString(), "classification" to className)
+            val bundle = bundleOf(
+                "picture" to base64Image,
+                "highest_prob" to maxScoreSoftmax.toString(),
+                "classification" to className
+            )
             navController.navigate(R.id.action_mainFragment_to_diseaseFragment, bundle)
 
         } catch (e: IOException) {
@@ -144,7 +164,7 @@ class MainFragment : Fragment(){
         val sumExpValues = expValues.sum()
         var softmaxValues = arrayOf<Float>()
 
-        for (value in expValues) softmaxValues += value/sumExpValues
+        for (value in expValues) softmaxValues += value / sumExpValues
 
         return softmaxValues.toFloatArray()
     }
@@ -181,6 +201,19 @@ class MainFragment : Fragment(){
         val b = baos.toByteArray()
         return Base64.encodeToString(b, Base64.DEFAULT)
     }
+
+    private fun dataInitialize() {
+        if (File(context?.filesDir, "classifications.json").exists()) {
+            val jsonFileString = File(context?.filesDir, "classifications.json").readText()
+
+            val gson = Gson()
+            val listClassificationType = object : TypeToken<List<Classification>>() {}.type
+            val classifications: ArrayList<Classification> =
+                gson.fromJson(jsonFileString, listClassificationType)
+            classificationHistoryList = classifications
+        }
+    }
+
 
     @Throws(IOException::class)
     fun assetFilePath(context: Context, assetName: String): String? {

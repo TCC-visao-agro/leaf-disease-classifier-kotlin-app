@@ -74,7 +74,7 @@ class DiseaseFragment : Fragment() {
         information.text = currentDiseaseInformation
         imageView.setImageBitmap(image)
 
-        saveImage(test, classification, picture)
+        saveImage(test, currentDiseaseName, picture)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -89,12 +89,11 @@ class DiseaseFragment : Fragment() {
         val dir = File(context?.filesDir, "classifications.json")
         //já fez classificação antes?
         if (!dir.exists()) {
-            Log.d("Unavailable", dir.absolutePath)
-            dir.writeText("[$json")
+            dir.writeText("[$json]")
         }
         else{
-            val fuckYouText = dir.readText().replace("]", "")
-            dir.writeText("$fuckYouText, $json]")
+            val appendText = dir.readText().replace("]", "")
+            dir.writeText("$appendText, $json]")
         }
     }
 
