@@ -1,27 +1,20 @@
 package com.example.leafdiseaseclassificationkotlin
 
-import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
-import android.content.pm.PackageManager
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.drawable.BitmapDrawable
 import android.os.Build
 import android.os.Bundle
 import android.util.Base64
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import java.io.*
 import java.time.LocalDateTime
 
@@ -40,7 +33,6 @@ class DiseaseFragment : Fragment() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     val currentDateTime = LocalDateTime.now()
-
 
     private val diseaseList = arrayOf(
         "Tomato_Bacterial_spot",
@@ -89,12 +81,10 @@ class DiseaseFragment : Fragment() {
         picture = arguments?.getString("picture")!!
     }
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_disease, container, false)
     }
@@ -126,63 +116,20 @@ class DiseaseFragment : Fragment() {
         information.text = currentDiseaseInformation
         imageView.setImageBitmap(image)
 
-        when (PackageManager.PERMISSION_GRANTED) {
-            ContextCompat.checkSelfPermission(
-                requireContext(),
-                WRITE_EXTERNAL_STORAGE
-            ) -> {
-                saveImage()
-            }
-            else -> {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                    permissionLauncher.launch(
-                        WRITE_EXTERNAL_STORAGE,
-                    )
-                }
-            }
-        }
-    }
+        saveImage(test, classification, picture)
 
-    private val permissionLauncher = registerForActivityResult(
-        ActivityResultContracts.RequestPermission()
-    ) { isGranted ->
-        if (isGranted) {
-            Log.d("Permission Granted:", isGranted.toString())
-        } else {
-            Log.d("Permission Granted:", isGranted.toString())
-        }
     }
-
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun saveImage() {
-        val dir = File(context?.filesDir, "LeafClassification")
-        if (!dir.exists()) {
-            Log.d("Unavailable:", dir.absolutePath);
-            Log.d("Can write?:", dir.canWrite().toString())
-            dir.mkdirs()
-        }
-        val drawable = imageView.drawable as BitmapDrawable
-        val bitmap = drawable.bitmap
-        val file = File(dir, "$currentDateTime.jpg")
-        try {
-            outputStream = FileOutputStream(file)
-        } catch (e: FileNotFoundException) {
-            e.printStackTrace()
-        }
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
-        Toast.makeText(context, "Imagem salva com sucesso.", Toast.LENGTH_SHORT).show()
-        try {
-            outputStream.flush()
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-        try {
-            outputStream.close()
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
+    private fun saveImage(highestProb: String, classification: String, picture: String) {
 
+        val gson = Gson()
+
+        val saveInfo = Classification(highestProb, classification, picture)
+
+        val json: String = gson.toJson(saveInfo)
+        println(json)
+        File(context?.filesDir,"${currentDateTime}.json").writeText(json)
     }
 
 }
