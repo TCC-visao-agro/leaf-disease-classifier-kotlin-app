@@ -4,7 +4,6 @@ import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
 import android.util.Base64
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +15,7 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.google.gson.Gson
 import java.io.*
+import java.text.DecimalFormat
 
 class DiseaseFragment : Fragment() {
     private var currentDiseaseName = "Healthy"
@@ -51,11 +51,10 @@ class DiseaseFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
 
-
         //decodando a string para virar bitmap e poder ser exibida
         val imageBytes = Base64.decode(picture, 0)
         val image = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
-        val test = (highestProb.toFloat() * 100).toString() + "%"
+        val test = DecimalFormat("#.00").format(highestProb.toFloat() * 100).toString() + "%"
 
         confidence = view.findViewById(R.id.confidence)
         result = view.findViewById(R.id.result)
@@ -79,7 +78,6 @@ class DiseaseFragment : Fragment() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun saveImage(highestProb: String, classification: String, picture: String) {
-
         val gson = Gson()
 
         val saveInfo = Classification(highestProb, classification, picture)
@@ -90,11 +88,11 @@ class DiseaseFragment : Fragment() {
         //já fez classificação antes?
         if (!dir.exists()) {
             dir.writeText("[$json]")
-        }
-        else{
+        } else {
             val appendText = dir.readText().replace("]", "")
             dir.writeText("$appendText, $json]")
         }
+
     }
 
 }

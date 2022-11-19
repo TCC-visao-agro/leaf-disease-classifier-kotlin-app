@@ -96,7 +96,7 @@ class MainFragment : Fragment() {
     private fun classifyImage(image: Bitmap) {
         try {
             val module =
-                LiteModuleLoader.load(this.assetFilePath(this.requireContext(), "model_v9.ptl"))
+                LiteModuleLoader.load(this.assetFilePath(this.requireContext(), "modelv11.ptl"))
             // Creates inputs for reference.
 
             // preparing input tensor
@@ -124,6 +124,8 @@ class MainFragment : Fragment() {
                     maxScoreIdx = i
                 }
             }
+
+
 
             val classes = arrayOf(
                 "Tomato_Bacterial_spot",

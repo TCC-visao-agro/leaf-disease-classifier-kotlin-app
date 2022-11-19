@@ -16,16 +16,16 @@ class DiseaseInformation {
     )
 
     val translatedDiseaseList = arrayOf(
-        "Mancha Bacteriana",
-        "Praga em estado inicial",
-        "Praga em estado avançado",
+        "Mancha bacteriana",
+        "Alternariose",
+        "Requeima",
         "Bolor",
-        "Mancha de folha septorial",
-        "Acaro",
-        "Mancha da folha",
-        "Virus de folha amarelada",
-        "Virus mosaico",
-        "Planta Saudavel"
+        "Mancha de Septoria",
+        "Ácaros",
+        "Mancha alvo",
+        "Vírus da folha amarela",
+        "Vírus Mosaico",
+        "Folha Saudável"
     )
 
     val diseaseSymptomsList = arrayOf(
