@@ -58,6 +58,7 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        helloName = view.findViewById(R.id.textViewHello)
         dataInitialize()
         recyclerView = view.findViewById(R.id.recyclerView)
         if (this::classificationHistoryList.isInitialized) {
@@ -70,7 +71,6 @@ class MainFragment : Fragment() {
         navController = Navigation.findNavController(view)
         camera = view.findViewById(R.id.buttonCamera)
         gallery = view.findViewById(R.id.buttonPhoto)
-        helloName = view.findViewById(R.id.textViewHello)
 
 
         camera.setOnClickListener {
@@ -90,7 +90,6 @@ class MainFragment : Fragment() {
                 Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
             startActivityForResult(cameraIntent, 1)
         }
-
     }
 
     private fun classifyImage(image: Bitmap) {
@@ -124,8 +123,6 @@ class MainFragment : Fragment() {
                     maxScoreIdx = i
                 }
             }
-
-
 
             val classes = arrayOf(
                 "Tomato_Bacterial_spot",
@@ -214,6 +211,12 @@ class MainFragment : Fragment() {
                 gson.fromJson(jsonFileString, listClassificationType)
             classificationHistoryList = classifications
         }
+
+        val fileName = "userName.txt"
+        val file = File(context?.filesDir, fileName)
+        val name = file.readText()
+
+        helloName.text = "Olá, $name!"
     }
 
 

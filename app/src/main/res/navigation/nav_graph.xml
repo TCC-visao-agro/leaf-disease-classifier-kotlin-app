@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/mainFragment">
+    app:startDestination="@id/welcomeFragment">
 
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.example.leafdiseaseclassificationkotlin.MainFragment"
         android:label="fragment_main"
-        tools:layout="@layout/fragment_main" >
+        tools:layout="@layout/fragment_main">
         <action
             android:id="@+id/action_mainFragment_to_diseaseFragment"
             app:destination="@id/diseaseFragment" />
@@ -19,14 +19,17 @@
         android:id="@+id/diseaseFragment"
         android:name="com.example.leafdiseaseclassificationkotlin.DiseaseFragment"
         android:label="fragment_disease"
-        tools:layout="@layout/fragment_disease" >
+        tools:layout="@layout/fragment_disease">
 
-        <argument android:name="picture"
-            android:defaultValue="None"/>
-        <argument android:name="highest_prob"
-            android:defaultValue="None"/>
-        <argument android:name="classification"
-            android:defaultValue="None"/>
+        <argument
+            android:name="picture"
+            android:defaultValue="None" />
+        <argument
+            android:name="highest_prob"
+            android:defaultValue="None" />
+        <argument
+            android:name="classification"
+            android:defaultValue="None" />
         <action
             android:id="@+id/action_diseaseFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
@@ -36,25 +39,32 @@
         android:id="@+id/welcomeFragment"
         android:name="com.example.leafdiseaseclassificationkotlin.WelcomeFragment"
         android:label="fragment_welcome"
-        tools:layout="@layout/fragment_welcome" >
+        tools:layout="@layout/fragment_welcome">
         <action
             android:id="@+id/action_welcomeFragment_to_nameFragment"
             app:destination="@id/nameFragment" />
+        <action
+            android:id="@+id/action_welcomeFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
     </fragment>
     <fragment
         android:id="@+id/nameFragment"
         android:name="com.example.leafdiseaseclassificationkotlin.NameFragment"
         android:label="fragment_name"
-        tools:layout="@layout/fragment_name" >
+        tools:layout="@layout/fragment_name">
+        <argument
+            android:name="name"
+            android:defaultValue="None" />
         <action
             android:id="@+id/action_nameFragment_to_startFragment"
             app:destination="@id/startFragment" />
+
     </fragment>
     <fragment
         android:id="@+id/startFragment"
         android:name="com.example.leafdiseaseclassificationkotlin.StartFragment"
         android:label="fragment_start"
-        tools:layout="@layout/fragment_start" >
+        tools:layout="@layout/fragment_start">
         <action
             android:id="@+id/action_startFragment_to_mainFragment"
             app:destination="@id/mainFragment" />

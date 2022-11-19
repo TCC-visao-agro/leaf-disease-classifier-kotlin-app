@@ -27,7 +27,7 @@
             android:id="@+id/imageView2"
             android:layout_width="300dp"
             android:layout_height="300dp"
-            tools:src="@drawable/Focus_amico" />
+            android:src="@drawable/focus_amico" />
 
         <TextView
             android:layout_width="wrap_content"
