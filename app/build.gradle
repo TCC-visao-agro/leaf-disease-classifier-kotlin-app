@@ -56,4 +56,5 @@ dependencies {
     implementation 'org.pytorch:pytorch_android_torchvision_lite:1.10.0'
     implementation 'com.facebook.fbjni:fbjni-java-only:0.2.2'
     implementation 'com.google.code.gson:gson:2.9.0'
+    implementation 'com.google.android.material:material:1.7.0'
 }
