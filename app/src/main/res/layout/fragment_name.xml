@@ -24,42 +24,46 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:layout_marginBottom="10dp"
-            android:fontFamily="sans-serif-black"
-            android:paddingLeft="50dp"
-            android:paddingRight="50dp"
+            android:layout_marginBottom="20dp"
+            android:fontFamily="@font/alexandria_bold"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
             android:text="Como podemos chamar você?"
             android:textAlignment="center"
             android:textColor="#000000"
             android:textSize="30dp" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="300dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:errorEnabled="true"
-            >
+            app:errorEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/input_name"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
                 android:layout_marginBottom="30dp"
-                android:fontFamily="sans-serif-black"
+                android:fontFamily="@font/alexandria_medium"
                 android:hint="Digite seu nome:"
-                android:paddingLeft="30dp"
-                android:paddingRight="30dp"
                 android:textAlignment="center"
-                android:textSize="20dp" />
+                android:textSize="20dp"
+                tools:text="daora" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/avancarNome"
-            android:layout_width="172dp"
+            android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:backgroundTint="#32B768"
-            android:text="Confirmar"
-            android:textColor="#FFFFFF" />
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/button_rounded"
+            android:fontFamily="@font/alexandria_medium"
+            android:text="CONFIRMAR"
+            android:textColor="#FFFFFF"
+            android:textSize="18dp" />
 
     </LinearLayout>
 

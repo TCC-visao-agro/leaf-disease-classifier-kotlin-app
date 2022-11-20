@@ -41,11 +41,11 @@
         android:label="fragment_welcome"
         tools:layout="@layout/fragment_welcome">
         <action
-            android:id="@+id/action_welcomeFragment_to_nameFragment"
-            app:destination="@id/nameFragment" />
-        <action
             android:id="@+id/action_welcomeFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
+        <action
+            android:id="@+id/action_welcomeFragment_to_startFragment"
+            app:destination="@id/startFragment" />
     </fragment>
     <fragment
         android:id="@+id/nameFragment"
@@ -56,8 +56,8 @@
             android:name="name"
             android:defaultValue="None" />
         <action
-            android:id="@+id/action_nameFragment_to_startFragment"
-            app:destination="@id/startFragment" />
+            android:id="@+id/action_nameFragment_to_confirmationName"
+            app:destination="@id/confirmationName" />
 
     </fragment>
     <fragment
@@ -66,7 +66,15 @@
         android:label="fragment_start"
         tools:layout="@layout/fragment_start">
         <action
-            android:id="@+id/action_startFragment_to_mainFragment"
+            android:id="@+id/action_startFragment_to_nameFragment"
+            app:destination="@id/nameFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/confirmationName"
+        android:name="com.example.leafdiseaseclassificationkotlin.ConfirmationName"
+        android:label="ConfirmationName" >
+        <action
+            android:id="@+id/action_confirmationName_to_mainFragment"
             app:destination="@id/mainFragment" />
     </fragment>
 </navigation>

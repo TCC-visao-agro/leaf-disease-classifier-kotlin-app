@@ -33,7 +33,7 @@ class WelcomeFragment : Fragment(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v!!.id) {
             R.id.avancar1 -> {
-                navController.navigate(R.id.action_welcomeFragment_to_nameFragment)
+                navController.navigate(R.id.action_welcomeFragment_to_startFragment)
             }
         }
     }

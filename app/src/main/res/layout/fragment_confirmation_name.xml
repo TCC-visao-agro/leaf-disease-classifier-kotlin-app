@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:layout_marginBottom="10dp"
-            android:fontFamily="sans-serif-black"
+            android:fontFamily="@font/alexandria_bold"
             android:paddingLeft="50dp"
             android:paddingRight="50dp"
             android:text="Prontinho!"
@@ -38,21 +38,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:fontFamily="sans-serif-medium"
-            android:paddingLeft="50dp"
-            android:paddingRight="50dp"
+            android:fontFamily="@font/alexandria_medium"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
             android:text=" Agora vamos começar a cuidar das suas plantinhas com muito cuidado."
             android:textAlignment="center"
             android:textColor="#DF000000"
             android:textSize="20dp" />
 
         <Button
-            android:id="@+id/avancar1"
-            android:layout_width="172dp"
+            android:id="@+id/avancar_para_main"
+            android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:backgroundTint="#32B768"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/button_rounded"
             android:text="Começar"
-            android:textColor="#FFFFFF" />
+            android:textColor="#FFFFFF"
+            android:textSize="20dp" />
 
     </LinearLayout>
 

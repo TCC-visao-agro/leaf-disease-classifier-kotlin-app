@@ -39,7 +39,7 @@ class NameFragment : Fragment(), View.OnClickListener {
             R.id.avancarNome -> {
                 if (!TextUtils.isEmpty(inputName.text.toString())) {
                     val bundle = bundleOf("name" to inputName.text.toString())
-                    navController.navigate(R.id.action_nameFragment_to_startFragment, bundle)
+                    navController.navigate(R.id.action_nameFragment_to_confirmationName, bundle)
                 }
             }
         }

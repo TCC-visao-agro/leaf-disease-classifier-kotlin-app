@@ -21,7 +21,6 @@ class StartFragment : Fragment(), View.OnClickListener {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        name = arguments?.getString("name")!!
         return inflater.inflate(R.layout.fragment_start, container, false)
     }
 
@@ -29,24 +28,13 @@ class StartFragment : Fragment(), View.OnClickListener {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
         view.findViewById<Button>(R.id.avancarComeco).setOnClickListener(this)
-
-        saveUser(name)
     }
 
     override fun onClick(v: View?) {
         when (v!!.id) {
             R.id.avancarComeco -> {
-                navController.navigate(R.id.action_startFragment_to_mainFragment)
+                navController.navigate(R.id.action_startFragment_to_nameFragment)
             }
-        }
-    }
-
-    private fun saveUser(name: String) {
-        val fileName = "userName.txt"
-        val file = File(context?.filesDir, fileName)
-
-        if (!file.exists()) {
-            file.writeText(name)
         }
     }
 }

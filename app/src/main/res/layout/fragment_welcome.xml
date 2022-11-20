@@ -16,7 +16,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-black"
+            android:fontFamily="@font/alexandria_bold"
             android:paddingLeft="30dp"
             android:paddingRight="30dp"
             android:text="Identifique as doenças da sua plantação"
@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="30dp"
-            android:fontFamily="sans-serif-medium"
+            android:fontFamily="@font/alexandria_regular"
             android:paddingLeft="30dp"
             android:paddingRight="30dp"
             android:text="Entenda quais doenças estão afetando sua plantação, e não perca mais frutos."
@@ -43,11 +43,15 @@
 
         <Button
             android:id="@+id/avancar1"
-            android:layout_width="120dp"
+            android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:backgroundTint="#32B768"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/button_rounded"
+            android:fontFamily="@font/alexandria_medium"
             android:text="Avançar"
-            android:textColor="#FFFFFF" />
+            android:textColor="#FFFFFF"
+            android:textSize="18dp" />
 
     </LinearLayout>
 
