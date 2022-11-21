@@ -95,7 +95,7 @@ class MainFragment : Fragment() {
     private fun classifyImage(image: Bitmap) {
         try {
             val module =
-                LiteModuleLoader.load(this.assetFilePath(this.requireContext(), "modelv11.ptl"))
+                LiteModuleLoader.load(this.assetFilePath(this.requireContext(), "model_v13.ptl"))
             // Creates inputs for reference.
 
             // preparing input tensor

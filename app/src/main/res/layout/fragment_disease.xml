@@ -68,7 +68,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/alexandria_regular"
-                    android:text="Taxa de acerto: "
+                    android:text="Taxa de assertividade: "
                     android:textSize="20dp"
                     android:textStyle="bold" />
 
@@ -102,12 +102,11 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="30dp"
                 android:paddingRight="30dp"
+                android:fontFamily="@font/alexandria_regular"
                 android:text=""
                 android:textAlignment="gravity"
                 android:textColor="#000"
-                android:textSize="20dp"
-                tools:fontFamily="@font/alexandria_regular"
-                tools:text="Uma infecção por Xanthomonas campestris pv. vesicatoria causa manchas em plantas maduras e mudas. A mancha bacteriana é semelhante à mancha bacteriana e muitas vezes é diagnosticada erroneamente. Uma imagem horizontal de perto de uma planta de tomate que sofre de mancha bacteriana, fazendo com que a folhagem fique marrom ou amarela e murche. A mancha bacteriana persiste de uma estação para outra em tomates voluntários, ervas daninhas como cereja moída e outras solanáceas e em restos de culturas. Esta doença frequentemente se espalha através de sementes infectadas. Uma vez que as bactérias infectam um jardim ou campo, elas podem ser difíceis de controlar. Mudas que são atacadas podem perder suas folhas. Plantas maduras geralmente apresentam sintomas nas folhas mais velhas. A doença se manifesta como áreas da folhagem que parecem estar encharcadas de água. As plantas podem desenvolver grandes manchas, principalmente nas margens das folhas. Sprays preventivos de cobre e controles culturais podem ser usados \u200B\u200Bpara controlar a propagação da doença. Não regue com aspersores, pois as bactérias podem ser espirradas em outras plantas. E certifique-se de selecionar sementes e transplantes certificados como livres da doença, se isso tiver sido um problema para você no passado. Algumas cepas também podem infectar pimentas. A rotação de seus tomates com culturas que não são da família Solanaceae ajudará a prevenir infecções subsequentes por manchas bacterianas." />
+                android:textSize="17dp"/>
         </LinearLayout>
 
     </ScrollView>
