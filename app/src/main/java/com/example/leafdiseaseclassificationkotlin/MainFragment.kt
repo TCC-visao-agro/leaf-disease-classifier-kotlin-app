@@ -95,7 +95,7 @@ class MainFragment : Fragment() {
     private fun classifyImage(image: Bitmap) {
         try {
             val module =
-                LiteModuleLoader.load(this.assetFilePath(this.requireContext(), "model_v13.ptl"))
+                LiteModuleLoader.load(this.assetFilePath(this.requireContext(), "modelv9.ptl"))
             // Creates inputs for reference.
 
             // preparing input tensor
@@ -117,6 +117,7 @@ class MainFragment : Fragment() {
             var maxScore = -Float.MAX_VALUE
             var maxScoreIdx = -1
             for (i in scores.indices) {
+                println("Valor antes do softmax: ${scores[i]}\nValores depois do softmax: ${softmaxValues[i]}" )
                 if (scores[i] > maxScore) {
                     maxScoreSoftmax = softmaxValues[i]
                     maxScore = scores[i]
